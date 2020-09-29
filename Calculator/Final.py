@@ -269,29 +269,23 @@ def push_percent():
 
 def pushM_plus():  # M+
     global memory
-    screen = Form.screen.text()
-    new_out = int(screen) + memory
-    print(memory)
-    Form.screen.setText(str(new_out))
+    memory += int(Form.screen.text())
+
 
 
 def pushM_minus():  # M-
     global memory
-    screen = Form.screen.text()
-    new_out = str(int(screen) - memory)
-    Form.screen.setText(new_out)
+    memory -= int(Form.screen.text())
 
 
 def pushM_read():  # MR-MEMORY READ
     global memory
-    memory = int(Form.screen.text())
-    Form.screen.setText("MEMORY ADDED")
+    Form.screen.setText(str(memory))
 
 
 def pushM_clear():  # MC - MEMORY CLEAR  (ALSO DELETE THE TXT FILE AFTER CLOSING OF CALCULTOR)
     global memory
     memory = 0
-    Form.screen.setText("MEMORY CLR")
 
 
 app = QtWidgets.QApplication([])
