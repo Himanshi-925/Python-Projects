@@ -4,15 +4,16 @@
 from PyQt5 import QtWidgets, uic
 import sys
 
+memory = 0
 state = 0
 
 
 def clear():
-    Form.screen.setText('')
+    Form.screen.setText("")
 
 
 def check_blank():
-    if Form.screen.text() == '' or Form.screen.text() == 'Invalid Input':
+    if Form.screen.text() == "" or Form.screen.text() == "Invalid Input":
         return True
     else:
         return False
@@ -30,12 +31,12 @@ def check_action():
     if state == 1:
         state = 0
     elif state == 2:
-        Form.screen.setText('')
+        Form.screen.setText("")
         state = 0
 
 
 def endswith_operation(inp):
-    arr = ['+', '-', '*', '/', '**']
+    arr = ["+", "-", "*", "/", "**"]
     try:
         if inp[-1] in arr:
             return True
@@ -47,70 +48,70 @@ def endswith_operation(inp):
 
 def push_0():
     check_callback()
-    inp = Form.screen.text()+'0'
+    inp = Form.screen.text() + "0"
     Form.screen.setText(inp)
 
 
 def push_1():
     check_callback()
-    inp = Form.screen.text()+'1'
+    inp = Form.screen.text() + "1"
     Form.screen.setText(inp)
 
 
 def push_2():
     check_callback()
-    inp = Form.screen.text()+'2'
+    inp = Form.screen.text() + "2"
     Form.screen.setText(inp)
 
 
 def push_3():
     check_callback()
-    inp = Form.screen.text()+'3'
+    inp = Form.screen.text() + "3"
     Form.screen.setText(inp)
 
 
 def push_4():
     check_callback()
-    inp = Form.screen.text()+'4'
+    inp = Form.screen.text() + "4"
     Form.screen.setText(inp)
 
 
 def push_5():
     check_callback()
-    inp = Form.screen.text()+'5'
+    inp = Form.screen.text() + "5"
     Form.screen.setText(inp)
 
 
 def push_6():
     check_callback()
-    inp = Form.screen.text()+'6'
+    inp = Form.screen.text() + "6"
     Form.screen.setText(inp)
 
 
 def push_7():
     check_callback()
-    inp = Form.screen.text()+'7'
+    inp = Form.screen.text() + "7"
     Form.screen.setText(inp)
 
 
 def push_8():
     check_callback()
-    inp = Form.screen.text()+'8'
+    inp = Form.screen.text() + "8"
     Form.screen.setText(inp)
 
 
 def push_9():
     check_callback()
-    inp = Form.screen.text()+'9'
+    inp = Form.screen.text() + "9"
     Form.screen.setText(inp)
 
 
 def push_cube():
     check_action()
-    if Form.screen.text() == '' or Form.screen.text() == 'Invalid Input':
-        Form.screen.setText('Invalid Input')
+    if Form.screen.text() == "" or Form.screen.text() == "Invalid Input":
+        Form.screen.setText("Invalid Input")
     else:
-        inp = int(eval(Form.screen.text())**3)
+        inp = int(eval(Form.screen.text()) ** 3)
         value = str(inp)
         if len(value) > 17:
             exp_value = "{:.2e}".format(int(value))
@@ -121,10 +122,10 @@ def push_cube():
 
 def push_square():
     check_action()
-    if Form.screen.text() == '' or Form.screen.text() == 'Invalid Input':
-        Form.screen.setText('Invalid Input')
+    if Form.screen.text() == "" or Form.screen.text() == "Invalid Input":
+        Form.screen.setText("Invalid Input")
     else:
-        inp = int(eval(Form.screen.text())**2)
+        inp = int(eval(Form.screen.text()) ** 2)
         value = str(inp)
         if len(value) > 17:
             exp_value = "{:.2e}".format(int(value))
@@ -138,10 +139,10 @@ def push_power():
     if check_blank():
         return
     if endswith_operation(Form.screen.text()):
-        inp = Form.screen.text()[:-1]+'**'
+        inp = Form.screen.text()[:-1] + "**"
         Form.screen.setText(inp)
     else:
-        inp = Form.screen.text()+'**'
+        inp = Form.screen.text() + "**"
         Form.screen.setText(inp)
 
 
@@ -150,10 +151,10 @@ def push_divide():
     # if check_blank():
     #     return
     if endswith_operation(Form.screen.text()):
-        inp = Form.screen.text()[:-1]+'/'
+        inp = Form.screen.text()[:-1] + "/"
         Form.screen.setText(inp)
     else:
-        inp = Form.screen.text()+'/'
+        inp = Form.screen.text() + "/"
         Form.screen.setText(inp)
 
 
@@ -162,10 +163,10 @@ def push_multiply():
     # if check_blank():
     #     return
     if endswith_operation(Form.screen.text()):
-        inp = Form.screen.text()[:-1]+'*'
+        inp = Form.screen.text()[:-1] + "*"
         Form.screen.setText(inp)
     else:
-        inp = Form.screen.text()+'*'
+        inp = Form.screen.text() + "*"
         Form.screen.setText(inp)
 
 
@@ -174,10 +175,10 @@ def push_minus():
     # if check_blank():
     #     return
     if endswith_operation(Form.screen.text()):
-        inp = Form.screen.text()[:-1]+'-'
+        inp = Form.screen.text()[:-1] + "-"
         Form.screen.setText(inp)
     else:
-        inp = Form.screen.text()+'-'
+        inp = Form.screen.text() + "-"
         Form.screen.setText(inp)
 
 
@@ -186,20 +187,20 @@ def push_plus():
     # if check_blank():
     #     return
     if endswith_operation(Form.screen.text()):
-        inp = Form.screen.text()[:-1]+'+'
+        inp = Form.screen.text()[:-1] + "+"
         Form.screen.setText(inp)
     else:
-        inp = Form.screen.text()+'+'
+        inp = Form.screen.text() + "+"
         Form.screen.setText(inp)
 
 
 def push_point():
     check_action()
     check = str(Form.screen.text())
-    if '.' in check:
+    if "." in check:
         pass
     elif check[-1].isnumeric():
-        Form.screen.setText(check+'.')
+        Form.screen.setText(check + ".")
     else:
         pass
 
@@ -217,37 +218,37 @@ def push_equal():
         else:
             Form.screen.setText(value)
     except:
-        Form.screen.setText('Invalid Input')
+        Form.screen.setText("Invalid Input")
         state = 2
 
 
 def push_del():
     check_action()
-    if Form.screen.text() == 'Invalid Input':
+    if m.Forscreen.text() == "Invalid Input":
         clear()
     else:
         inp = Form.screen.text()
-        Form.screen.setText(inp[:len(inp)-1])
+        Form.screen.setText(inp[: len(inp) - 1])
 
 
 def push_c():
     check_action()
-    Form.screen.setText('')
+    Form.screen.setText("")
 
 
 def push_pandm():
     check_action()
     check = str(Form.screen.text())
-    if check[0] == '-':
+    if check[0] == "-":
         Form.screen.setText(check[1:])
     else:
-        inp = '-'+Form.screen.text()
+        inp = "-" + Form.screen.text()
         Form.screen.setText(inp)
 
 
 def push_byX():
     check_action()
-    inp = eval("1/"+Form.screen.text())
+    inp = eval("1/" + Form.screen.text())
     value = str(inp)
     if len(value) > 17:
         exp_value = "{:.2e}".format(int(value))
@@ -260,30 +261,41 @@ def push_percent():
     check_action()
     inp = Form.screen.text()
     try:
-        value = str(eval(inp+"/100"))
+        value = str(eval(inp + "/100"))
         Form.screen.setText(value)
     except:
-        Form.screen.setText('')
+        Form.screen.setText("")
 
 
 def pushM_plus():  # M+
-    return
+    global memory
+    screen = Form.screen.text()
+    new_out = int(screen) + memory
+    print(memory)
+    Form.screen.setText(str(new_out))
 
 
 def pushM_minus():  # M-
-    return
+    global memory
+    screen = Form.screen.text()
+    new_out = str(int(screen) - memory)
+    Form.screen.setText(new_out)
 
 
 def pushM_read():  # MR-MEMORY READ
-    return
+    global memory
+    memory = int(Form.screen.text())
+    Form.screen.setText("MEMORY ADDED")
 
 
 def pushM_clear():  # MC - MEMORY CLEAR  (ALSO DELETE THE TXT FILE AFTER CLOSING OF CALCULTOR)
-    return
+    global memory
+    memory = 0
+    Form.screen.setText("MEMORY CLR")
 
 
 app = QtWidgets.QApplication([])
-Form = uic.loadUi('main.ui')
+Form = uic.loadUi("main.ui")
 Form.show()
 Form.push0.clicked.connect(push_0)
 Form.push1.clicked.connect(push_1)
