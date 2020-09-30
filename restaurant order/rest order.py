@@ -3,6 +3,8 @@ import time
 import random
 import playsound
 import math
+import datetime
+import database_command as dc
 from PyQt5 import QtWidgets, uic
 
 
@@ -16,6 +18,7 @@ def openPList():
 
 
 def CalTotal():
+    global serviceCharge
     serviceCharge = 0
     price = [8, 120, 90, 130, 70, 35, 550, 700, 200, 300, 70, 7, 100, 12]
     Purchase_list = []
@@ -104,11 +107,12 @@ def CalTotal():
         serviceCharge += 5
 
     RefNo()
-
+    global CostOfMeal
     CostOfMeal_list = [Purchase_list[i]*price[i] for i in range(len(price))]
     CostOfMeal = sum(CostOfMeal_list)
     menu.opCOM.setText('Rs.'+str(CostOfMeal))
 
+    global vat
     vat = CostOfMeal*0.05
     menu.opVAT.setText('Rs.'+str(vat))
 
@@ -123,6 +127,7 @@ def CalTotal():
 def RefNo():
     global ref_state
     if ref_state == 1:
+        global refNo
         refNo = random.randint(1234567, 9876543)
         menu.opRef.setText(str(refNo))
         ref_state = 0
@@ -185,35 +190,49 @@ def cashPayDone():
     global totalcostGlobal
     paid = int(cash.payMade.text())
     cash.balance.setText('Rs. '+str(math.floor(paid)-totalcostGlobal))
-    time.sleep(2)
+    global refNo, CostOfMeal, vat, serviceCharge
+    CurrentDate = str(datetime.datetime.now())
+    dc.InsertData(refNo, CostOfMeal, vat, serviceCharge,
+                  totalcostGlobal, CurrentDate, "Cash")
     playsound.playsound('audio.mp3', True)
-    # cash.close()
 
 
 def Payment_done():
     playsound.playsound('audio.mp3', True)
+    CurrentDate = str(datetime.datetime.now())
+    global refNo, CostOfMeal, vat, serviceCharge, totalcostGlobal
+    dc.InsertData(refNo, CostOfMeal, vat, serviceCharge,
+                  totalcostGlobal, CurrentDate, "QrCode")
     qr.close()
 
 
-global totalcostGlobal
-global ref_state
-ref_state = 1
-app = QtWidgets.QApplication([])
-intro = uic.loadUi('intro.ui')
-menu = uic.loadUi('mainMenu.ui')
-price_list = uic.loadUi('PriceList.ui')
-ch_pay = uic.loadUi('payment.ui')
-qr = uic.loadUi('qrscan.ui')
-cash = uic.loadUi('cash.ui')
-intro.show()
-intro.introCont.clicked.connect(closeIntro)
-menu.priceList.clicked.connect(openPList)
-menu.total.clicked.connect(CalTotal)
-menu.reset.clicked.connect(resetAll)
-menu.quit.clicked.connect(quitall)
-menu.payment.clicked.connect(choosePayment)
-ch_pay.qrcode.clicked.connect(qrcode_payment)
-qr.paymentDone.clicked.connect(Payment_done)
-ch_pay.cash.clicked.connect(cash_payment)
+if __name__ == "__main__":
+    global vat, serviceCharge, CostOfMeal, ref_state, totalcostGlobal, refNo
+    ref_state = 1
+    try:
+        dc.createdb()
+    except:
+        pass
+    try:
+        dc.createTable()
+    except:
+        pass
+    app = QtWidgets.QApplication([])
+    intro = uic.loadUi('intro.ui')
+    menu = uic.loadUi('mainMenu.ui')
+    price_list = uic.loadUi('PriceList.ui')
+    ch_pay = uic.loadUi('payment.ui')
+    qr = uic.loadUi('qrscan.ui')
+    cash = uic.loadUi('cash.ui')
+    intro.show()
+    intro.introCont.clicked.connect(closeIntro)
+    menu.priceList.clicked.connect(openPList)
+    menu.total.clicked.connect(CalTotal)
+    menu.reset.clicked.connect(resetAll)
+    menu.quit.clicked.connect(quitall)
+    menu.payment.clicked.connect(choosePayment)
+    ch_pay.qrcode.clicked.connect(qrcode_payment)
+    qr.paymentDone.clicked.connect(Payment_done)
+    ch_pay.cash.clicked.connect(cash_payment)
 
-sys.exit(app.exec_())
+    sys.exit(app.exec_())
