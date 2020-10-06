@@ -8,7 +8,7 @@ memory = 0
 state = 0
 
 
-def clear():
+def clearOutputScreen():
     Form.screen.setText("")
 
 
@@ -22,7 +22,7 @@ def check_blank():
 def check_callback():
     global state
     if state == 1:
-        clear()
+        clearOutputScreen()
         state = 0
 
 
@@ -225,7 +225,7 @@ def push_equal():
 def push_del():
     check_action()
     if m.Forscreen.text() == "Invalid Input":
-        clear()
+        clearOutputScreen()
     else:
         inp = Form.screen.text()
         Form.screen.setText(inp[: len(inp) - 1])
